@@ -4,7 +4,8 @@ import { LuUpload, LuDownload, LuSparkles, LuSearch, LuX } from "react-icons/lu"
 import DashboardLayout from "../layouts/DashboardLayout";
 import Loader from "../components/Loader";
 import api from "../api/axios";
-
+const backendOrigin = (import.meta.env.VITE_API_URL || "").replace(/\/api\/?$/, "");
+const fileUrl = (path) => (path?.startsWith("http") ? path : `${backendOrigin}${path}`);
 const Papers = () => {
   const [papers, setPapers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -167,7 +168,7 @@ const Papers = () => {
                   )}
                 </div>
                 <div className="flex flex-col gap-2 shrink-0">
-                  <a href={p.fileUrl} target="_blank" rel="noreferrer" className="btn-secondary text-xs px-3 py-2">
+                  <a href={fileUrl(p.fileUrl)} target="_blank" rel="noreferrer" className="btn-secondary text-xs px-3 py-2">
                     <LuDownload size={14} /> Download
                   </a>
                   <button
